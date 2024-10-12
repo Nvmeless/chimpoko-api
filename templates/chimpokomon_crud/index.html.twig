@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chimpokomon index{% endblock %}
+
+{% block body %}
+    <h1>Chimpokomon index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chimpokomon in chimpokomons %}
+            <tr>
+                <td>{{ chimpokomon.id }}</td>
+                <td>{{ chimpokomon.name }}</td>
+                <td>{{ chimpokomon.status }}</td>
+                <td>{{ chimpokomon.createdAt ? chimpokomon.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ chimpokomon.updatedAt ? chimpokomon.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_chimpokomon_crud_show', {'id': chimpokomon.id}) }}">show</a>
+                    <a href="{{ path('app_chimpokomon_crud_edit', {'id': chimpokomon.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_chimpokomon_crud_new') }}">Create new</a>
+{% endblock %}

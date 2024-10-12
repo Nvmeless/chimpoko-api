@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Chimpokomon{% endblock %}
+
+{% block body %}
+    <h1>Create new Chimpokomon</h1>
+
+    {{ include('chimpokomon_crud/_form.html.twig') }}
+
+    <a href="{{ path('app_chimpokomon_crud_index') }}">back to list</a>
+{% endblock %}
