@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -19,6 +20,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ChimpokomonController extends AbstractController
 {
     #[Route(name: 'app_chimpokomon__index', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", message: 'Hanhanhaaan vous n\'avez pas dit le mot magiiiiqueeuuuuh')]
+
     public function index(ChimpokomonRepository $chimpokomonRepository, SerializerInterface $serializer): JsonResponse
     {
         $listChimpokomon = $chimpokomonRepository->findAll();
@@ -30,6 +33,8 @@ class ChimpokomonController extends AbstractController
     }
 
     #[Route(name: 'app_chimpokomon_new', methods: ['POST'])]
+    #[IsGranted("ROLE_ADMIN", message: 'Hanhanhaaan vous n\'avez pas dit le mot magiiiiqueeuuuuh')]
+
     public function new(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, UrlGeneratorInterface $urlGenerator): JsonResponse
     {
         $newChimpokomon = $serializer->deserialize($request->getContent(), Chimpokomon::class, 'json', ["groups" => "getChimpokomon"]);
@@ -48,6 +53,8 @@ class ChimpokomonController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_chimpokomon_show', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", message: 'Hanhanhaaan vous n\'avez pas dit le mot magiiiiqueeuuuuh')]
+
     public function show(Chimpokomon $chimpokomon, SerializerInterface $serializer): JsonResponse
     {
         $jsonChimpokomon = $serializer->serialize($chimpokomon, 'json', ["groups" => "getChimpokomon"]);
@@ -55,6 +62,7 @@ class ChimpokomonController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_chimpokomon_edit', methods: ['PUT', 'PATCH'])]
+    #[IsGranted("ROLE_ADMIN", message: 'Hanhanhaaan vous n\'avez pas dit le mot magiiiiqueeuuuuh')]
     public function edit(Request $request, Chimpokomon $chimpokomon, SerializerInterface $serializer, EntityManagerInterface $entityManager): Response
     {
         $updatedChimpokomon = $serializer->deserialize($request->getContent(), Chimpokomon::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $chimpokomon]);
